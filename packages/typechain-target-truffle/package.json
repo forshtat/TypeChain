@@ -1,5 +1,5 @@
 {
-  "name": "typechain-target-truffle",
+  "name": "typechain-target-trufflehotfix",
   "description": "TypeChain target with truffle support",
   "keywords": [
     "ethereum",
@@ -7,12 +7,12 @@
     "bindings",
     "truffle"
   ],
-  "version": "1.0.2",
+  "version": "0.0.1-alpha",
   "license": "MIT",
   "repository": "https://github.com/ethereum-ts/Typechain",
   "devDependencies": {
     "truffle": "^4.1.14",
-    "truffle-typings": "^1.0.4"
+    "@openeth/truffle-typings": "^0.0.1"
   },
   "dependencies": {
     "lodash": "^4.17.15"

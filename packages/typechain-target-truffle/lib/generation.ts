@@ -13,7 +13,7 @@ import { values } from "lodash";
 
 export function codegen(contracts: Contract[]) {
   const template = `
-/// <reference types="truffle-typings" />
+/// <reference types="@openeth/truffle-typings" />
 import { BigNumber } from "bignumber.js";
 
 ${contracts.map(generateContractInterface).join("\n")}
@@ -26,7 +26,7 @@ ${contracts.map(generateContractInstanceInterface).join("\n")}
 
 export function generateArtifactHeaders(contracts: Contract[]): string {
   return `
-  /// <reference types="truffle-typings" />
+  /// <reference types="@openeth/truffle-typings" />
 
   import * as TruffleContracts from ".";
   
