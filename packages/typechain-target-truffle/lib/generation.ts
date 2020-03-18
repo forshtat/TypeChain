@@ -15,6 +15,7 @@ export function codegen(contracts: Contract[]) {
   const template = `
 /// <reference types="@openeth/truffle-typings" />
 import { BigNumber } from "bignumber.js";
+import BN from 'bn.js';
 
 ${contracts.map(generateContractInterface).join("\n")}
 
@@ -120,13 +121,13 @@ function generateOutputTypes(outputs: Array<AbiOutputParameter>): string {
 function generateInputType(evmType: EvmType): string {
   switch (evmType.type) {
     case "integer":
-      return "number | BigNumber | string";
+      return "number | BigNumber | BN | string";
     case "uinteger":
-      return "number | BigNumber | string";
+      return "number | BigNumber | BN | string";
     case "address":
-      return "string | BigNumber";
+      return "string | BigNumber | BN";
     case "bytes":
-      return "string | BigNumber";
+      return "string | BigNumber | BN";
     case "dynamic-bytes":
       return "string";
     case "array":
