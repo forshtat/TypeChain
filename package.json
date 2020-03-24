@@ -15,7 +15,7 @@
     "prepublishOnly": "yarn test && yarn build",
     "lint": "yarn format && yarn tslint",
     "lint:fix": "yarn tslint:fix && yarn format:fix",
-    "test": "yarn lint && ./scripts/test.sh",
+    "test": "./scripts/test.sh",
     "test:coverage": "yarn lint && ./scripts/test.sh COVERAGE",
     "test:fix": "yarn lint:fix && ./scripts/test.sh",
     "test:mocha": "TS_NODE_FILES=true TS_NODE_IGNORE=\"/test/integration/targets/web3-v*/\" mocha --require ts-node/register --require tsconfig-paths/register --require test/setup-chai.ts --require 'test/integration/before.ts' 'test/integration/web3.ts' './**/*.spec.ts'",

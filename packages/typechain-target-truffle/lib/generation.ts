@@ -14,7 +14,6 @@ import { values } from "lodash";
 export function codegen(contracts: Contract[]) {
   const template = `
 /// <reference types="@openeth/truffle-typings" />
-import { BigNumber } from "bignumber.js";
 import BN from 'bn.js';
 
 ${contracts.map(generateContractInterface).join("\n")}
@@ -114,6 +113,7 @@ function generateOutputTypes(outputs: Array<AbiOutputParameter>): string {
   if (outputs.length === 1) {
     return generateOutputType(outputs[0].type);
   } else {
+    /// ALEX TODO: add names for named return types
     return `[${outputs.map(param => generateOutputType(param.type)).join(", ")}]`;
   }
 }
@@ -121,13 +121,13 @@ function generateOutputTypes(outputs: Array<AbiOutputParameter>): string {
 function generateInputType(evmType: EvmType): string {
   switch (evmType.type) {
     case "integer":
-      return "number | BigNumber | BN | string";
+      return "number | BN | string";
     case "uinteger":
-      return "number | BigNumber | BN | string";
+      return "number | BN | string";
     case "address":
-      return "string | BigNumber | BN";
+      return "string | BN";
     case "bytes":
-      return "string | BigNumber | BN";
+      return "string | BN";
     case "dynamic-bytes":
       return "string";
     case "array":
@@ -144,9 +144,9 @@ function generateInputType(evmType: EvmType): string {
 function generateOutputType(evmType: EvmOutputType): string {
   switch (evmType.type) {
     case "integer":
-      return "BigNumber";
+      return "BN";
     case "uinteger":
-      return "BigNumber";
+      return "BN";
     case "address":
       return "string";
     case "void":
@@ -161,7 +161,27 @@ function generateOutputType(evmType: EvmOutputType): string {
     case "string":
       return "string";
     case "tuple":
-      return generateTupleType(evmType, generateOutputType);
+      return generateTupleType(evmType, generateOutputTypeInStruct);
+  }
+}
+
+function generateOutputTypeInStruct(evmType: EvmOutputType): string {
+  switch (evmType.type) {
+    case "void":
+      return "void";
+    case "integer":
+    case "uinteger":
+    case "address":
+    case "bytes":
+    case "dynamic-bytes":
+    case "string":
+      return "string";
+    case "array":
+      return `(${generateOutputTypeInStruct(evmType.itemType)})[]`;
+    case "boolean":
+      return "boolean";
+    case "tuple":
+      return generateTupleType(evmType, generateOutputTypeInStruct);
   }
 }
 

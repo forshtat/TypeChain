@@ -1,4 +1,5 @@
 pragma solidity ^0.4.4;
+pragma experimental ABIEncoderV2;
 
 contract DumbContract {
   uint public counter;
@@ -7,6 +8,16 @@ contract DumbContract {
   address public someAddress;
   uint public arrayParamLength;
   bytes32 public byteArray;
+
+
+  struct AllTypesStruct {
+    uint counter;
+    bool someBool;
+    uint[3] counterArray;
+    address someAddress;
+    bytes32 byte32Array;
+    bytes bytesArray;
+  }
 
   constructor(uint _counter) public {
     counter = _counter;
@@ -19,6 +30,11 @@ contract DumbContract {
 
   function returnAll() public constant returns (uint, uint) {
     return (counter, counterWithOffset(5));
+  }
+
+  function returnAllTypesStruct() public constant returns (AllTypesStruct) {
+    uint[3] memory counterArray = [uint(1), 2, 3];
+    return AllTypesStruct(42, true, counterArray, 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1, 0x1234, 'hello');
   }
 
   // typechain doesnt support function overloading currently
